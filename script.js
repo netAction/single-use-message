@@ -1,34 +1,18 @@
-// Cookie setzen
-//document.cookie = "ich=swag; expires=Thu, 2037-01-19, 03:14:08 UTC";
-
-
-
-cookies = {};
-$.each(document.cookie.split('; '),function( i, cookie ) {
-	cookie = cookie.split('=');
-	cookies[cookie[0]] = cookie[1];
-});
-
-console.log(cookies);
-
-if (cookies.password == password) {
+if (localStorage.getItem("password") == password) {
 	// Gutschein anzeigen
 	$('body')
-		.css('background-image','url(gutscheine/gutschein'+ cookies.number +'.jpg)')
+		.css('background-image','url(gutscheine/gutschein'+ localStorage.getItem("number") +'.jpg)')
 		.click(function() {
-			if ((cookies.number*1) == messagecount) return;
-			if (confirm("Gutschein für immer löschen?")) {
-				document.cookie = "number="+ ((cookies.number*1)+1) +"; expires=Thu, 2037-01-19, 03:14:08 UTC";
+			if ((localStorage.getItem("number")*1) == messagecount) return;
+			if (confirm("Nachricht für immer löschen?")) {
+				localStorage.setItem("number", ((localStorage.getItem("number")*1)+1));
 				location.reload(); 
 			}
 		});
 } else {
 	// Login anzeigen
 	var passwordprompt = prompt("Passwort eingeben", "Kutschein");
-	document.cookie = "password="+ passwordprompt +"; expires=Thu, 2037-01-19, 03:14:08 UTC";
-	document.cookie = "number=1; expires=Thu, 2037-01-19, 03:14:08 UTC";
+	localStorage.setItem("password", passwordprompt);
+	localStorage.setItem("number", 1);
 	location.reload(); 
 }
-
-// Cookie löschen
-// document.cookie = "ich="+ cookies["ich"] +"; expires=Thu, 01 Jan 1970 00:00:01 GMT";
